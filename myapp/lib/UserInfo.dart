@@ -81,23 +81,11 @@ class _UserInfoState extends State<UserInfo> {
                   decoration: const InputDecoration(
                     hintText: 'Number of Vehicle Owned',
                   ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
                     hintText: 'Vehicle Type',
                   ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
                 ),
                 
                 Padding(
