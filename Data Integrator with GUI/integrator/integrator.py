@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """This module provides the Integrator class to merge multiple files."""
-
+import json
 import time
 import os
-from pathlib import Path
+from Pathlib import Path
+from gpx_Converter import Converter
+import pandas as pd
 
 from PyQt5.QtCore import QObject, pyqtSignal
 
@@ -18,6 +20,24 @@ class Integrator(QObject):
     def __init__(self, files):
         super().__init__()
         self._files = files
+        
+    def integrateFiles(self):
+        cwd = os.getcwd()
+        for fileNumber,file in enumerate(self._files, 1):
+            oldName = file.name
+            newPath = file.parent,joinpath(
+                f"{cwd}/output/{str(oldName.replace('.json','.csv'))}"
+            )
+            data = json.loads(open(file).read())
+            df = pd.DataFrame(data,index=[0])
+            df.to_csv(newPath)
+            time.sleep(0.1) # Comment this line to integrate move faster.
+            self.progressed.emit(fileNumber)
+            self.integratedFile.emit(newPath)
+        self.progressed.emit(0)  # Reset the progress
+        self.finished.emit()
+            
+            
 
     def integrateFiles(self):
         cwd = os.getcwd()
