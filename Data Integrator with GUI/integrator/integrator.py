@@ -101,6 +101,7 @@ class Integrator(QObject):
             mv data/*.gpx data/Integrated\ Data/
         fi
 
+	mv data/output_garmin.csv output/output_garmin.csv
         mv data/*.csv data/Integrated\ Data/
         
 

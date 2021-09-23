@@ -7,3 +7,6 @@ Data Integrator with GUI/integrator/.DS_Store
 .DS_Store
 *.xml
 *.iml
+*.csv
+*.gpx
+*.pyc

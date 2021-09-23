@@ -5,19 +5,12 @@
 
 .output output/finalData.csv
 
-UPDATE records
-SET latitude = ROUND(latitude,4),
-    longitude = ROUND(longitude,4),
-    date = STRFTIME('%Y-%m-%d, %H:%M', date);
-
-UPDATE visitedPlaces
-SET latitude = ROUND(latitude,4),
-    longitude = ROUND(longitude,4);
-
-SELECT R.*, VP.locationName AS locationName_vis, VP.Activity1, VP.Activity2, VP.Activity3
+SELECT R.*, VP.locationName AS vis_name, 
+        VP.Activity1 AS vis_activity1, VP.Activity2 AS vis_activity2, VP.Activity3 AS vis_activity3, 
+        VP.latitude AS vis_lat, VP.longitude AS vis_long
 FROM records AS R
 LEFT JOIN visitedPlaces AS VP
-    ON R.latitude = VP.latitude 
-        AND R.longitude = VP.longitude;
+    ON ROUND(R.latitude,4) = ROUND(VP.latitude,4)
+        AND ROUND(R.longitude,4) = ROUND(VP.longitude,4);
 
 .output stdout
