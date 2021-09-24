@@ -1,0 +1,4 @@
+id,date,latitude,longitude,speed,vis_name,vis_activity1,vis_activity2,vis_activity3,vis_lat,vis_long,loc_name,loc_lat,loc_long,garmin_lat,garmin_long,garmin_alt
+han,"2021-08-25, 17:25",-31.9848542,115.8194963,0,home,sleep,walk,study,-31.98486831,115.8195166,"","","",,,
+han,"2021-08-27, 17:25",-31.9834542,115.8149963,0,"","","","","","",School,-31.98345556,115.8149555,,,
+han,"2018-11-07, 00:40",-31.9848542,115.8194963,0,home,sleep,walk,study,-31.98486831,115.8195166,"","","",-31.984057305380702,115.76817948371172,9.600000381469727

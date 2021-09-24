@@ -17,6 +17,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cron/cron.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import './UserProfile.dart';
 
 const fetchBackground = "fetchBackground";
 
@@ -603,6 +604,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),*/
+            /*
             ListTile(
               title: const Text('Profile'),
               onTap: () {
@@ -614,6 +616,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 ).then((value) {
                   _getGarminId();
                 });
+              },
+            ),*/
+            ListTile(
+              title: const Text('UserProfile'),
+              onTap: () {
+                // Update the state of the app
+                // Then close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserProfile()),
+                );
               },
             ),
             ListTile(

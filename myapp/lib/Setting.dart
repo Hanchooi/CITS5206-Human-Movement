@@ -41,7 +41,7 @@ class _SettingState extends State<Setting> {
         .transform(utf8.decoder)
         .transform(new CsvToListConverter())
         .toList();
-    print(fields);
+    //print(fields);
 
     for (int i = 2; i < fields.length; i++) {
       List<dynamic> element = [];

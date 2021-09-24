@@ -17,14 +17,13 @@ class UserInfo extends StatefulWidget {
 
 class _UserInfoState extends State<UserInfo> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController _usernameController = new TextEditingController();
+  TextEditingController _garminIdController = new TextEditingController();
+  TextEditingController _stravaIdController = new TextEditingController();
+  TextEditingController _genderController = new TextEditingController();
+  TextEditingController _numOfVehicleController = new TextEditingController();
+  TextEditingController _vehicleTypeController = new TextEditingController();
 
-  String? name;
-  String? garminId;
-  String? stravaId;
-  String? gender;
-  // String? dob;
-  String? numOfvehicle;
-  String? vehicleType;
 
   void _formSubmitted() {
     // get the current state of the form
@@ -33,16 +32,16 @@ class _UserInfoState extends State<UserInfo> {
       _form.save();
     }
   }
-
-  void _generateUserProfile() async {
+  // generate userProfile csv file
+  void _generateUserProfile(String username, String garminId, String stravaId, String gender, String numOfVehicle, String vehicleType) async {
     Map<String, dynamic> _userInfo = {
-      'UserName': name,
+      'UserName': username,
       'GarminId': garminId,
-      'StravaId': stravaId,
+      'StravaId': stravaId ,
       'Gender': gender,
-      'NumberOfVehicle': numOfvehicle,
+      'NumberOfVehicle': numOfVehicle,
       'VehicleType': vehicleType
-    };
+    };   
     final directory = await getApplicationDocumentsDirectory();
     final path = directory.path;
     File file = File('$path/${garminId}userProfile.json');
@@ -56,12 +55,33 @@ class _UserInfoState extends State<UserInfo> {
     final UploadTask uploadTask = storageReference.putFile(file);
   }
 
-  // store GarminId to shared_preference
-  void _setGarminId(String value) async {
+  // load user information form shared preference
+  void _getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("GarminId", value);
+    _usernameController.text = (prefs.getString("UserName")?? "");
+    _garminIdController.text = (prefs.getString("GarminId")?? "");
+    _stravaIdController.text = (prefs.getString("StravaId")?? "");
+    _genderController.text = (prefs.getString("Gender")?? "");
+    _numOfVehicleController.text = (prefs.getString("NumOfVehicle")?? "");
+    _vehicleTypeController.text = (prefs.getString("VehicleType")?? "");
+  }
+  // store user information to shared_preference
+  void _setUserInfo(String username, String garminId, String stravaId, String gender, String numOfVehicle, String vehicleType) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("UserName", username);
+    prefs.setString("GarminId", garminId);
+    prefs.setString("StravaId", stravaId);
+    prefs.setString("Gender", gender);
+    prefs.setString("NumOfVehicle", numOfVehicle);
+    prefs.setString("VehicleType", vehicleType);
     // String gId = (prefs.getString('GarminId') ?? "");
     // print("get ${gId}");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserInfo();
   }
 
   @override
@@ -80,104 +100,71 @@ class _UserInfoState extends State<UserInfo> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TextFormField(
-                  key: Key('name'),
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your Name',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  onSaved: (v) {
-                    name = v;
-                  }),
-              TextFormField(
-                  key: Key('Garmin'),
-                  decoration: const InputDecoration(
-                    hintText: 'Garmin Account ID',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  onSaved: (v) {
-                    garminId = v;
-                  }),
-              TextFormField(
-                  key: Key('Strava'),
-                  decoration: const InputDecoration(
-                    hintText: 'Strava Account ID',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  onSaved: (v) {
-                    stravaId = v;
-                  }),
-              TextFormField(
-                  key: Key('Gender'),
-                  decoration: const InputDecoration(
-                    hintText: 'Gender',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  onSaved: (v) {
-                    gender = v;
-                  }),
-              /*
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Date of Birth',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  onSaved: (v){
-                    dob = v;
+                controller: _usernameController,
+                decoration: const InputDecoration(
+                  hintText: 'Enter your Name',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
                   }
-                ), */
+                  return null;
+                }),
               TextFormField(
-                  key: Key('Vehicle'),
-                  decoration: const InputDecoration(
-                    hintText: 'Number of Vehicle Owned',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  onSaved: (v) {
-                    numOfvehicle = v;
-                  }),
+                controller: _garminIdController,
+                decoration: const InputDecoration(
+                  hintText: 'Garmin Account ID',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                }),
               TextFormField(
-                  key: Key('type'),
-                  decoration: const InputDecoration(
-                    hintText: 'Vehicle Type',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  onSaved: (v) {
-                    vehicleType = v;
-                  }),
+                controller: _stravaIdController,
+                decoration: const InputDecoration(
+                  hintText: 'Strava Account ID',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                }),
+              TextFormField(
+                controller: _genderController,
+                decoration: const InputDecoration(
+                  hintText: 'Gender',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                }),
+              TextFormField(
+                controller: _numOfVehicleController,
+                decoration: const InputDecoration(
+                  hintText: 'Number of Vehicle Owned',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                }),
+              TextFormField(
+                controller: _vehicleTypeController,
+                decoration: const InputDecoration(
+                  hintText: 'Vehicle Type',
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                }),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
@@ -186,8 +173,8 @@ class _UserInfoState extends State<UserInfo> {
                     // Validate will return true if the form is valid, or false if
                     // the form is invalid.
                     _formSubmitted();
-                    _setGarminId(garminId!);
-                    _generateUserProfile();
+                    _setUserInfo(_usernameController.text, _garminIdController.text, _stravaIdController.text, _genderController.text, _numOfVehicleController.text, _vehicleTypeController.text);
+                    _generateUserProfile(_usernameController.text, _garminIdController.text, _stravaIdController.text, _genderController.text, _numOfVehicleController.text, _vehicleTypeController.text);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

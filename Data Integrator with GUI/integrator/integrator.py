@@ -21,6 +21,7 @@ class Integrator(QObject):
         self._files = files
 
     def integrateFiles(self):
+        os.system('mkdir data')
         cwd = os.getcwd()
         for fileNumber, file in enumerate(self._files, 1):
             oldName = file.name
@@ -52,55 +53,56 @@ class Integrator(QObject):
 
         cmd = '''
         mkdir output
+        mkdir data/Used\ Data/
         head -1 data/records1.csv > output/finalData.csv
         tail -n +2 -q data/records*.csv >> output/finalData.csv
-        cat output/finalData.csv
         FILE_loc=data/locations.csv
         FILE_garmin=data/garmin_gpx.gpx
         FILE_vis=data/visited_places.csv
         
         if [[ -f "$FILE_garmin" ]]; then
             echo "Garmin File Exists -> Creating Garming CSV"
-            gpx_converter --function "gpx_to_csv" --input_file "$FILE_garmin" --output_file "data/output_garmin.csv"
+            gpx_converter --function "gpx_to_csv" --input_file "$FILE_garmin" --output_file "output/output_garmin.csv"
         fi
 
         if [[ -f "$FILE_vis" && -f "$FILE_loc" && -f "$FILE_garmin" ]]; then
-            echo "4 Files Provided -> Merging"
+            echo "All Files Provided -> Merging"
             sqlite3 < merge_visited.sql
             sqlite3 < merge_locations.sql
             sqlite3 < merge_garmin.sql
-            cat output/finalData.csv
-            mv data/*.gpx data/Integrated\ Data/
+            mv data/*.gpx data/Used\ Data/
         elif [[ -f "$FILE_vis" && -f "$FILE_loc" ]]; then
-            echo "3 Files Provided -> Merging"
+            echo "Garmin File Not Provided -> Merging"
             sqlite3 < merge_visited.sql
-            
             sqlite3 < merge_locations.sql
         elif [[ -f "$FILE_vis" && -f "$FILE_garmin" ]]; then
-            echo "3 Files Provided -> Merging"
+            echo "Location File Not Provided -> Merging"
             sqlite3 < merge_visited.sql
             sqlite3 < merge_garmin.sql
-            mv data/*.gpx data/Integrated\ Data/
+            mv data/*.gpx data/Used\ Data/
         elif [[ -f "$FILE_loc" && -f "$FILE_garmin" ]]; then
-            echo "3 Files Provided -> Merging"
+            echo "Visited File Not Provided  -> Merging"
             sqlite3 < merge_locations.sql
             sqlite3 < merge_garmin.sql
-            mv data/*.gpx data/Integrated\ Data/
+            mv data/*.gpx data/Used\ Data/
         elif [ -f "$FILE_vis" ]; then
-            echo "2 Files Provided -> Merging"
+            echo "VISITED FILE ONLY -> Merging"
             sqlite3 < merge_visited.sql
         elif [ -f "$FILE_loc" ]; then
-            echo "2 Files Provided -> Merging"
+            echo "LOCATION FILE ONLY -> Merging"
             sqlite3 < merge_locations.sql
         elif [ -f "$FILE_garmin" ]; then
-            echo "2 Files Provided -> Merging"
+            echo "GARMIN FILE ONLY -> Merging"
             sqlite3 < merge_garmin.sql
-            mv data/*.gpx data/Integrated\ Data/
+            mv data/*.gpx data/Used\ Data/
         fi
 
-	mv data/output_garmin.csv output/output_garmin.csv
-        mv data/*.csv data/Integrated\ Data/
-        
+        echo "Data Integration Completed"
+        echo "Output files are stored in output folder"
+
+        mv data/*.csv data/Used\ Data/
+
+        echo "Used files are moved to Data/Used Data"
 
         '''
         os.system(cmd)

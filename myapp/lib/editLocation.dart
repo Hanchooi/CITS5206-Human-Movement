@@ -26,6 +26,7 @@ class _editLocationState extends State<editLocation> {
   TextEditingController _enjoy3Controller = new TextEditingController();
   TextEditingController _CommentController = new TextEditingController();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  location thislocation = new location(0.0,0.0);
 
 
   void editvalue(String key, double long, double lat, String locationName, String trans_mode, String Activ1, String enjoy1, String Activ2, String enjoy2, String Activ3, String enjoy3, String comment) async{
@@ -66,10 +67,9 @@ class _editLocationState extends State<editLocation> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    location thislocation = new location(0.0,0.0);
-    thislocation.longitude = widget.item[0];
-    thislocation.latitude = widget.item[1];
+  void initState() {
+    super.initState();
+
     _locationnameController = TextEditingController(text: widget.item[2]);
     _transmodeController = TextEditingController(text: widget.item[3]);
     _Activity1Controller = TextEditingController(text: widget.item[4]);
@@ -79,6 +79,13 @@ class _editLocationState extends State<editLocation> {
     _Activity3Controller = TextEditingController(text: widget.item[8]);
     _enjoy3Controller = TextEditingController(text: widget.item[9].toString());
     _CommentController = TextEditingController(text: widget.item[10]);
+    thislocation.longitude = widget.item[0];
+    thislocation.latitude = widget.item[1];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Marker'),
@@ -95,8 +102,11 @@ class _editLocationState extends State<editLocation> {
               TextFormField(
                 key: Key('location_input'),
                 controller: _locationnameController,
+                onChanged: (text) {
+                  _locationnameController = TextEditingController(text: text);
+                },
                 autofocus: true,
-                autocorrect: true,
+                //autocorrect: true,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -115,8 +125,11 @@ class _editLocationState extends State<editLocation> {
               TextFormField(
                 key: Key('transport_input'),
                 controller: _transmodeController,
+                onChanged: (text) {
+                  _transmodeController = TextEditingController(text: text);
+                },
                 autofocus: true,
-                autocorrect: true,
+                //autocorrect: true,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -136,8 +149,11 @@ class _editLocationState extends State<editLocation> {
               TextFormField(
                 key: Key('Activity_one'),
                 controller: _Activity1Controller,
+                onChanged: (text) {
+                  _Activity1Controller = TextEditingController(text: text);
+                },
                 autofocus: true,
-                autocorrect: true,
+                //autocorrect: true,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -155,8 +171,11 @@ class _editLocationState extends State<editLocation> {
               TextFormField(
                 key: Key('Enjoy_one'),
                 controller: _enjoy1Controller,
+                onChanged: (text) {
+                  _enjoy1Controller = TextEditingController(text: text);
+                },
                 autofocus: true,
-                autocorrect: true,
+                //autocorrect: true,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -175,8 +194,11 @@ class _editLocationState extends State<editLocation> {
 
               TextFormField(
                 controller: _Activity2Controller,
+                onChanged: (text) {
+                  _Activity2Controller = TextEditingController(text: text);
+                },
                 autofocus: true,
-                autocorrect: true,
+                //autocorrect: true,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -187,8 +209,11 @@ class _editLocationState extends State<editLocation> {
 
               TextFormField(
                 controller: _enjoy2Controller,
+                onChanged: (text) {
+                  _enjoy2Controller = TextEditingController(text: text);
+                },
                 autofocus: true,
-                autocorrect: true,
+                //autocorrect: true,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -210,8 +235,11 @@ class _editLocationState extends State<editLocation> {
 
               TextFormField(
                 controller: _Activity3Controller,
+                onChanged: (text) {
+                  _Activity3Controller = TextEditingController(text: text);
+                },
                 autofocus: true,
-                autocorrect: true,
+                //autocorrect: true,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -222,6 +250,9 @@ class _editLocationState extends State<editLocation> {
 
               TextFormField(
                 controller: _enjoy3Controller,
+                onChanged: (text) {
+                  _enjoy3Controller = TextEditingController(text: text);
+                },
                 autofocus: true,
                 autocorrect: true,
                 keyboardType: TextInputType.number,
@@ -246,8 +277,11 @@ class _editLocationState extends State<editLocation> {
               TextFormField(
                 key: Key('comment'),
                 controller: _CommentController,
+                onChanged: (text) {
+                  _CommentController = TextEditingController(text: text);
+                },
                 autofocus: true,
-                autocorrect: true,
+                //autocorrect: true,
                 keyboardType: TextInputType.text,
                 maxLines: 8,
                 decoration: InputDecoration(

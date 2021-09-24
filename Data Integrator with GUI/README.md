@@ -1,39 +1,32 @@
-# RP Renamer
+# CITS5206-Human-Movement
 
-**RP Renamer** is a bulk file rename tool built with Python and [PyQt5](https://www.riverbankcomputing.com/static/Docs/PyQt5/index.html).
+Installation Guide for Data Integrator
 
-## Running the Application
+1) Download folder "Data Integrator with GUI"
+2) Unzip the Zip File if it is downloaded as Zip.
+3) Open "Terminal" or "Command Prompt"
+4) Go to the folder in "Terminal" or "Command Prompt"
+5) Make firstSetup.command executable ( chmod u+x firstSetup.command )
+6) run "firstSetup.command" (./firstSetup.command)
+7) Open the application. (Double click runGUI.command OR type ./runGUI.command in Command Prompt/Terminal)
+8) "Sample Data" folder provides some sample data to test the application.
 
-To run **RP Renamer**, you need to download the source code. Then open a terminal or command-line window and run the following steps:
+If your "Data Integrator with GUI" folder is in Desktop, series of commands in Terminal would like like this:
 
-1. Create and activate a Python virtual environment.
+![image](https://user-images.githubusercontent.com/56809330/133559238-6c7df3b5-892d-403f-8adf-d90c2b58d3e1.png)
 
-```sh
-$ cd rprename_project/
-$ python3 -m venv ./venv
-$ source venv/bin/activate
-(venv) $
-```
+Refer "Data Integrator User Manual" for user instructions.
 
-2. Install the dependencies.
 
-```sh
-(venv) $ pip install -r requirements.txt
-```
+TEST INSTRUCTION:
 
-3. Run the application.
+1) After initial setting, double-click runTest.command.
+2) Select all files in "Sample Data" folder
+3) Click Open and let the test run. Observe Test results.
 
-```sh
-(venv) $ python3 rprenamer.py
-```
+File selection:
+<img width="1280" alt="Screen Shot 2021-09-24 at 12 03 06 pm" src="https://user-images.githubusercontent.com/56809330/134616412-5184e035-e8a5-44da-a114-63f2198feaba.png">
 
-**Note:** This application was coded and tested with Python 3.8.5 and PyQt 5.15.2.
+Test results should look like this:
+<img width="1280" alt="Screen Shot 2021-09-24 at 12 03 21 pm" src="https://user-images.githubusercontent.com/56809330/134616448-3a13e4bf-de85-4f87-8fa3-9b7b0c5c51eb.png">
 
-## Release History
-
-- 0.1.0
-  - A work in progress
-
-## About the Author
-
-Leodanis Pozo Ramos – [@lpozo78](https://twitter.com/lpozo78) – leodanis@realpython.com

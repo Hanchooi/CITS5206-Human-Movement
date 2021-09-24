@@ -1,7 +1,7 @@
 .mode csv
 .headers on
 .import output/finalData.csv record_visited_loc
-.import data/output_garmin.csv garmin
+.import output/output_garmin.csv garmin
 
 .output output/finalData.csv
 
