@@ -5,6 +5,7 @@
 from collections import deque
 from pathlib import Path
 
+import pandas as pd
 from PyQt5.QtCore import QThread
 from PyQt5.QtWidgets import QFileDialog, QWidget
 
@@ -49,7 +50,7 @@ class Window(QWidget, Ui_Window):
         else:
             initDir = str(Path.home())
         files, filter = QFileDialog.getOpenFileNames(
-            self, "Choose Files to Integrate", initDir
+            self, "Choose Files to Integrate", initDir, filter=FILTERS
         )
         if len(files) > 0:
             srcDirName = str(Path(files[0]).parent)
