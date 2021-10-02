@@ -26,10 +26,10 @@ class Integrator(QObject):
         for fileNumber, file in enumerate(self._files, 1):
             oldName = file.name
             newPath = file.parent, joinpath(
-                f"{cwd}/output/{str(oldName.replace('.json','.csv'))}"
+                f"{cwd}/data/{str(oldName.replace('.json','.csv'))}"
             )
             data = json.loads(open(file).read())
-            df = pd.DataFrame(data, index=[0])
+            df = pd.DataFrame(data.values())
             df.to_csv(newPath)
             time.sleep(0.1)  # Comment this line to integrate move faster.
             self.progressed.emit(fileNumber)
