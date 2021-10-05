@@ -50,7 +50,7 @@ class Window(QWidget, Ui_Window):
         else:
             initDir = str(Path.home())
         files, filter = QFileDialog.getOpenFileNames(
-            self, "Choose Files to Integrate", initDir, filter=FILTERS
+            self, "Choose Files to Integrate", initDir
         )
         if len(files) > 0:
             srcDirName = str(Path(files[0]).parent)
