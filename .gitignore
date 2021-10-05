@@ -2,6 +2,7 @@
 .DS_Store
 *.xml
 *.iml
-*.csv
-*.gpx
+
 *.pyc
+*.gpx
+*.csv

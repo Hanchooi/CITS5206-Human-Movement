@@ -59,7 +59,7 @@ class Post extends StatefulWidget {
 }
 
 class _PostState extends State<Post> {
-  void deleteLocation(String name) async {
+  Future<void> deleteLocation(String name) async {
     String csv = "";
 
     final directory = await getApplicationDocumentsDirectory();
@@ -77,10 +77,11 @@ class _PostState extends State<Post> {
       element = fields[i];
       if (element[2] == name) {
         fields.remove(element);
+        print("remove done");
       }
     }
 
-    File file = File(path);
+    File file = new File(path);
     await file.delete();
     csv = const ListToCsvConverter().convert(fields);
     await file.writeAsString(csv);
@@ -115,7 +116,7 @@ class _PostState extends State<Post> {
             heroTag: null,
             onPressed: () {
               Navigator.push(
-                context,
+                this.context,
                 MaterialPageRoute(
                     builder: (context) => editLocation(item: widget.item)),
               );
@@ -127,10 +128,10 @@ class _PostState extends State<Post> {
           new FloatingActionButton.extended(
             key: Key('delete'),
             heroTag: null,
-            onPressed: () {
-              deleteLocation(widget.item[2]);
+            onPressed: () async{
+              await deleteLocation(widget.item[2]);
               Navigator.push(
-                context,
+                this.context,
                 MaterialPageRoute(
                     builder: (context) => Setting(thislocation: thislocation)),
               );

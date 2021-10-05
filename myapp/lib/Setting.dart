@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'package:path/path.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key, required this.thislocation}) : super(key: key);
@@ -25,9 +26,18 @@ class _SettingState extends State<Setting> {
   Set<Marker> markers = new Set();
   int _markerIdCounter = 1;
   List<List<dynamic>> fields = [];
+  String _garminId = "";
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+  // get GarminId from shared_preference
+  void _getGarminId() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _garminId = (prefs.getString('GarminId') ?? "");
+    });
   }
 
   void _readfile() async {
@@ -41,7 +51,7 @@ class _SettingState extends State<Setting> {
         .transform(utf8.decoder)
         .transform(new CsvToListConverter())
         .toList();
-    //print(fields);
+    print(fields);
 
     for (int i = 2; i < fields.length; i++) {
       List<dynamic> element = [];
@@ -76,7 +86,7 @@ class _SettingState extends State<Setting> {
 
     File file = File(path);
     final fileName = basename(file.path);
-    final destination = 'files/$fileName';
+    final destination = '$_garminId/location.csv';
     print(path);
     Reference storageReference =
         FirebaseStorage.instance.ref().child("$destination");
@@ -85,8 +95,10 @@ class _SettingState extends State<Setting> {
 
   @override
   void initState() {
-    super.initState();
+    print("reload setting");
     _readfile();
+    super.initState();
+    _getGarminId();
   }
 
   /*Future _addMarkerLongPressed(LatLng latlang) async {
@@ -132,7 +144,7 @@ class _SettingState extends State<Setting> {
           onLongPress: (latlang) {
             //_addMarkerLongPressed(latlang); //we will call this function when pressed on the map
             Navigator.push(
-                context,
+                this.context,
                 MaterialPageRoute(
                     builder: (context) => MarkerForm(latlang: latlang)));
           },
@@ -145,7 +157,7 @@ class _SettingState extends State<Setting> {
               child: new FloatingActionButton.extended(
                 key: Key('finish'),
                 heroTag: null,
-                onPressed: () {
+                onPressed: () async{
                   uploadFile();
                   Navigator.push(
                     context,
@@ -165,7 +177,7 @@ class _SettingState extends State<Setting> {
                 heroTag: null,
                 onPressed: () {
                   Navigator.push(
-                    context,
+                    this.context,
                     MaterialPageRoute(
                         builder: (context) => SettingEdit(field: field)),
                   );

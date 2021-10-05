@@ -29,7 +29,7 @@ class _editLocationState extends State<editLocation> {
   location thislocation = new location(0.0,0.0);
 
 
-  void editvalue(String key, double long, double lat, String locationName, String trans_mode, String Activ1, String enjoy1, String Activ2, String enjoy2, String Activ3, String enjoy3, String comment) async{
+  Future<void> editvalue(String key, double long, double lat, String locationName, String trans_mode, String Activ1, String enjoy1, String Activ2, String enjoy2, String Activ3, String enjoy3, String comment) async{
 
     String csv = "";
     final directory = await getApplicationDocumentsDirectory();
@@ -70,15 +70,15 @@ class _editLocationState extends State<editLocation> {
   void initState() {
     super.initState();
 
-    _locationnameController = TextEditingController(text: widget.item[2]);
-    _transmodeController = TextEditingController(text: widget.item[3]);
-    _Activity1Controller = TextEditingController(text: widget.item[4]);
+    _locationnameController = TextEditingController(text: widget.item[2].toString());
+    _transmodeController = TextEditingController(text: widget.item[3].toString());
+    _Activity1Controller = TextEditingController(text: widget.item[4].toString());
     _enjoy1Controller = TextEditingController(text: widget.item[5].toString());
-    _Activity2Controller = TextEditingController(text: widget.item[6]);
+    _Activity2Controller = TextEditingController(text: widget.item[6].toString());
     _enjoy2Controller = TextEditingController(text: widget.item[7].toString());
-    _Activity3Controller = TextEditingController(text: widget.item[8]);
+    _Activity3Controller = TextEditingController(text: widget.item[8].toString());
     _enjoy3Controller = TextEditingController(text: widget.item[9].toString());
-    _CommentController = TextEditingController(text: widget.item[10]);
+    _CommentController = TextEditingController(text: widget.item[10].toString());
     thislocation.longitude = widget.item[0];
     thislocation.latitude = widget.item[1];
   }
@@ -297,11 +297,11 @@ class _editLocationState extends State<editLocation> {
                   child: ElevatedButton(
                     key: Key('confirm'),
                     //style: style,
-                    onPressed: () {
+                    onPressed: () async{
                       if (_formKey.currentState!.validate()) {
-                        editvalue(widget.item[2], widget.item[0], widget.item[1], _locationnameController.text, _transmodeController.text, _Activity1Controller.text, _enjoy1Controller.text, _Activity2Controller.text, _enjoy2Controller.text, _Activity3Controller.text, _enjoy3Controller.text, _CommentController.text);
+                        await editvalue(widget.item[2], widget.item[0], widget.item[1], _locationnameController.text, _transmodeController.text, _Activity1Controller.text, _enjoy1Controller.text, _Activity2Controller.text, _enjoy2Controller.text, _Activity3Controller.text, _enjoy3Controller.text, _CommentController.text);
                         Navigator.push(
-                          context,
+                          this.context,
                           MaterialPageRoute(builder: (context) => Setting(thislocation: thislocation)),
                         );
                       }

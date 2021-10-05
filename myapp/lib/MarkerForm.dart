@@ -64,7 +64,7 @@ class _MarkerFormState extends State<MarkerForm> {
     rows.add(row);
   }
 
-  Future<String> _recordvalue(LatLng latlang, String locationName, String trans_mode, String Activ1, String enjoy1, String Activ2, String enjoy2, String Activ3, String enjoy3, String comment) async{
+  Future<void> _recordvalue(LatLng latlang, String locationName, String trans_mode, String Activ1, String enjoy1, String Activ2, String enjoy2, String Activ3, String enjoy3, String comment) async{
     List<List<dynamic>> rows = [];
 
     String csv = "";
@@ -88,7 +88,7 @@ class _MarkerFormState extends State<MarkerForm> {
     final fields = await input.transform(utf8.decoder).transform(new CsvToListConverter()).toList();
     print(fields);
 
-    return("finish writing");
+    print("finish writing");
     //await file.delete();
   }
 
@@ -276,11 +276,11 @@ class _MarkerFormState extends State<MarkerForm> {
                   child: ElevatedButton(
                     key: Key("submit"),
                     //style: style,
-                    onPressed: () {
+                    onPressed: () async{
                       if (_formKey.currentState!.validate()) {
-                        _recordvalue(latlang, _locationnameController.text, _transmodeController.text, _Activity1Controller.text, _enjoy1Controller.text, _Activity2Controller.text, _enjoy2Controller.text, _Activity3Controller.text, _enjoy3Controller.text, _CommentController.text);
+                        await _recordvalue(latlang, _locationnameController.text, _transmodeController.text, _Activity1Controller.text, _enjoy1Controller.text, _Activity2Controller.text, _enjoy2Controller.text, _Activity3Controller.text, _enjoy3Controller.text, _CommentController.text);
                         Navigator.push(
-                          context,
+                          this.context,
                           MaterialPageRoute(builder: (context) => Setting(thislocation: thislocation)),
                         );
                       }

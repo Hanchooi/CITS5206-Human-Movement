@@ -28,5 +28,6 @@ File selection:
 <img width="1280" alt="Screen Shot 2021-09-24 at 12 03 06 pm" src="https://user-images.githubusercontent.com/56809330/134616412-5184e035-e8a5-44da-a114-63f2198feaba.png">
 
 Test results should look like this:
-<img width="1280" alt="Screen Shot 2021-09-24 at 12 03 21 pm" src="https://user-images.githubusercontent.com/56809330/134616448-3a13e4bf-de85-4f87-8fa3-9b7b0c5c51eb.png">
+<img width="1280" alt="test-screenshot" src="https://user-images.githubusercontent.com/56809330/134832292-e2fb0781-f3d0-4c5d-b4bf-e72ee5dd984e.png">
+
 

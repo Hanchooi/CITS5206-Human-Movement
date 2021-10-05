@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QWidget
 from .ui.window import Ui_Window
 from .views import Window
 import time
+import os
 
 
 @pytest.fixture
@@ -42,3 +43,14 @@ def test_click(app, qtbot):
     qtbot.mouseClick(app.loadFilesButton, QtCore.Qt.LeftButton)
     qtbot.mouseClick(app.integrateButton, QtCore.Qt.LeftButton)
     time.sleep(5)
+
+
+def test_output_exist():
+    assert os.path.isfile("output/finalData.csv") == True
+    assert os.path.isfile("output/output_garmin.csv") == True
+
+
+def test_output_content():
+    with open("output/finalData.csv") as f:
+        txt = f.read().split("\n")
+    assert txt[0] == "id,date,latitude,longitude,speed,vis_name,vis_activity1,vis_activity2,vis_activity3,vis_lat,vis_long,loc_name,loc_lat,loc_long,garmin_lat,garmin_long,garmin_alt"

@@ -21,8 +21,9 @@ class _UserInfoState extends State<UserInfo> {
   TextEditingController _garminIdController = new TextEditingController();
   TextEditingController _stravaIdController = new TextEditingController();
   TextEditingController _genderController = new TextEditingController();
-  TextEditingController _numOfVehicleController = new TextEditingController();
-  TextEditingController _vehicleTypeController = new TextEditingController();
+  String dd_gender="";
+  String num_vechical = '';
+  String type_vehicle = '';
 
 
   void _formSubmitted() {
@@ -58,12 +59,14 @@ class _UserInfoState extends State<UserInfo> {
   // load user information form shared preference
   void _getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState((){
     _usernameController.text = (prefs.getString("UserName")?? "");
     _garminIdController.text = (prefs.getString("GarminId")?? "");
     _stravaIdController.text = (prefs.getString("StravaId")?? "");
-    _genderController.text = (prefs.getString("Gender")?? "");
-    _numOfVehicleController.text = (prefs.getString("NumOfVehicle")?? "");
-    _vehicleTypeController.text = (prefs.getString("VehicleType")?? "");
+    num_vechical = (prefs.getString("NumOfVehicle")?? "");
+    dd_gender = (prefs.getString("Gender")?? "");
+    type_vehicle = (prefs.getString("VehicleType")?? "");
+    });
   }
   // store user information to shared_preference
   void _setUserInfo(String username, String garminId, String stravaId, String gender, String numOfVehicle, String vehicleType) async {
@@ -102,7 +105,9 @@ class _UserInfoState extends State<UserInfo> {
               TextFormField(
                 controller: _usernameController,
                 decoration: const InputDecoration(
-                  hintText: 'Enter your Name',
+                  border: OutlineInputBorder(),
+                  labelText: 'Please Enter Your Name',
+                  prefixIcon: Icon(Icons.person),
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
@@ -110,10 +115,13 @@ class _UserInfoState extends State<UserInfo> {
                   }
                   return null;
                 }),
+              SizedBox(height: 18.0),
               TextFormField(
                 controller: _garminIdController,
                 decoration: const InputDecoration(
-                  hintText: 'Garmin Account ID',
+                  border: OutlineInputBorder(),
+                  labelText: 'Garmin Account ID',
+                  prefixIcon: Icon(Icons.manage_accounts),
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
@@ -121,10 +129,13 @@ class _UserInfoState extends State<UserInfo> {
                   }
                   return null;
                 }),
+              SizedBox(height: 18.0),
               TextFormField(
                 controller: _stravaIdController,
                 decoration: const InputDecoration(
-                  hintText: 'Strava Account ID',
+                  border: OutlineInputBorder(),
+                  labelText: 'Strava Account ID',
+                  prefixIcon: Icon(Icons.manage_accounts),
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
@@ -132,6 +143,7 @@ class _UserInfoState extends State<UserInfo> {
                   }
                   return null;
                 }),
+              /**
               TextFormField(
                 controller: _genderController,
                 decoration: const InputDecoration(
@@ -142,19 +154,113 @@ class _UserInfoState extends State<UserInfo> {
                     return 'Please enter some text';
                   }
                   return null;
-                }),
-              TextFormField(
-                controller: _numOfVehicleController,
-                decoration: const InputDecoration(
-                  hintText: 'Number of Vehicle Owned',
+                }),*/
+              SizedBox(height: 18.0),
+              DropdownButtonFormField(
+                hint: dd_gender == ""
+                    ? Text('Gender')
+                    : Text(
+                  dd_gender,
+                  style: TextStyle(color: Colors.blue),
                 ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                }),
-              TextFormField(
+                isExpanded: true,
+                iconSize: 30.0,
+                style: TextStyle(color: Colors.blue),
+                decoration: const InputDecoration(
+                  labelText: 'Gender',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.transgender),
+                ),
+                items: ['Male', 'Female'].map(
+                      (value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  },
+                ).toList(),
+                onChanged: (value) {
+                  setState(() {
+                          dd_gender = value.toString();
+                    },
+                  );
+                },
+              ),
+
+            /*TextFormField(
+              controller: _numOfVehicleController,
+              decoration: const InputDecoration(
+                hintText: 'Number of Vehicle Owned',
+              ),
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              }),*/
+              SizedBox(height: 18.0),
+              DropdownButtonFormField(
+                hint: num_vechical == ""
+                    ? Text('Number of Vehicle Owned')
+                    : Text(
+                  num_vechical,
+                  style: TextStyle(color: Colors.blue),
+                ),
+                isExpanded: true,
+                iconSize: 30.0,
+                style: TextStyle(color: Colors.blue),
+                decoration: const InputDecoration(
+                  labelText: 'Number of Vehicle Owned',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.emoji_transportation),
+                ),
+                items: ['0', '1', '2', '3'].map(
+                      (value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  },
+                ).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    num_vechical = value.toString();
+                  },
+                  );
+                },
+              ),
+              SizedBox(height: 18.0),
+              DropdownButtonFormField(
+                hint: type_vehicle == ""
+                    ? Text('Vehicle Type')
+                    : Text(
+                  type_vehicle,
+                  style: TextStyle(color: Colors.blue),
+                ),
+                isExpanded: true,
+                iconSize: 30.0,
+                style: TextStyle(color: Colors.blue),
+                decoration: const InputDecoration(
+                  labelText: 'Vehicle Type',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.car_repair),
+                ),
+                items: ['None', 'SUV', 'Truck', 'Van', 'Coupe', 'Luxury Car', 'Hybrid/Electric'].map(
+                      (value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  },
+                ).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    type_vehicle = value.toString();
+                  },
+                  );
+                },
+              ),
+              /**TextFormField(
                 controller: _vehicleTypeController,
                 decoration: const InputDecoration(
                   hintText: 'Vehicle Type',
@@ -163,8 +269,8 @@ class _UserInfoState extends State<UserInfo> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter some text';
                   }
-                  return null;
-                }),
+                    return null;
+                }),*/
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
@@ -173,8 +279,8 @@ class _UserInfoState extends State<UserInfo> {
                     // Validate will return true if the form is valid, or false if
                     // the form is invalid.
                     _formSubmitted();
-                    _setUserInfo(_usernameController.text, _garminIdController.text, _stravaIdController.text, _genderController.text, _numOfVehicleController.text, _vehicleTypeController.text);
-                    _generateUserProfile(_usernameController.text, _garminIdController.text, _stravaIdController.text, _genderController.text, _numOfVehicleController.text, _vehicleTypeController.text);
+                    _setUserInfo(_usernameController.text, _garminIdController.text, _stravaIdController.text, dd_gender, num_vechical, type_vehicle);
+                    _generateUserProfile(_usernameController.text, _garminIdController.text, _stravaIdController.text, dd_gender, num_vechical, type_vehicle);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
