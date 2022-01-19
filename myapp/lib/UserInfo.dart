@@ -134,7 +134,7 @@ class _UserInfoState extends State<UserInfo> {
                 controller: _stravaIdController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Strava Account ID',
+                  labelText: 'Strava Account ID (Optional)',
                   prefixIcon: Icon(Icons.manage_accounts),
                 ),
                 validator: (String? value) {
@@ -158,7 +158,7 @@ class _UserInfoState extends State<UserInfo> {
               SizedBox(height: 18.0),
               DropdownButtonFormField(
                 hint: dd_gender == ""
-                    ? Text('Gender')
+                    ? Text('Gender (Optional)')
                     : Text(
                   dd_gender,
                   style: TextStyle(color: Colors.blue),
@@ -167,11 +167,11 @@ class _UserInfoState extends State<UserInfo> {
                 iconSize: 30.0,
                 style: TextStyle(color: Colors.blue),
                 decoration: const InputDecoration(
-                  labelText: 'Gender',
+                  labelText: 'Gender (Optional)',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.transgender),
                 ),
-                items: ['Male', 'Female'].map(
+                items: ['Male', 'Female', 'Prefer Not to Tell'].map(
                       (value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -214,7 +214,7 @@ class _UserInfoState extends State<UserInfo> {
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.emoji_transportation),
                 ),
-                items: ['0', '1', '2', '3'].map(
+                items: ['0', '1', '2', 'More'].map(
                       (value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -232,7 +232,7 @@ class _UserInfoState extends State<UserInfo> {
               SizedBox(height: 18.0),
               DropdownButtonFormField(
                 hint: type_vehicle == ""
-                    ? Text('Vehicle Type')
+                    ? Text('Vehicle Type (Optional)')
                     : Text(
                   type_vehicle,
                   style: TextStyle(color: Colors.blue),
@@ -241,11 +241,11 @@ class _UserInfoState extends State<UserInfo> {
                 iconSize: 30.0,
                 style: TextStyle(color: Colors.blue),
                 decoration: const InputDecoration(
-                  labelText: 'Vehicle Type',
+                  labelText: 'Vehicle Type (Optional)',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.car_repair),
                 ),
-                items: ['None', 'SUV', 'Truck', 'Van', 'Coupe', 'Luxury Car', 'Hybrid/Electric'].map(
+                items: ['None', 'Bicycle', 'Car', 'SUV', 'Truck', 'Van', 'Coupe', 'Luxury Car', 'Hybrid/Electric'].map(
                       (value) {
                     return DropdownMenuItem<String>(
                       value: value,

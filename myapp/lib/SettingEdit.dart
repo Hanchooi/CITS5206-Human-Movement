@@ -137,7 +137,7 @@ class _PostState extends State<Post> {
                     builder: (context) => Setting(thislocation: thislocation)),
               );
             },
-            label: Text(''),
+            label: Text('Delete'),
             icon: const Icon(Icons.delete),
             backgroundColor: Colors.black,
           ),
